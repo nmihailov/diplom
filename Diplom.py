@@ -10,9 +10,10 @@ import json
 
 
 def geturl(method):
-    return 'https://api.vk.com/method/{method_name}'.format(method_name = method)
+    return 'https://api.vk.com/method/{method_name}'.format(method_name=method)
 
-def groups_scearch(friends):
+
+def groups_search(friends):
     for i in range(0, len(friends)):
         try:
             friend = friends[i]
@@ -31,7 +32,8 @@ def groups_scearch(friends):
             time.sleep(0.34)
         except KeyError:
             pass
-        
+
+
 def get_result(groups):
     for i in groups:
         params = {
@@ -47,6 +49,7 @@ def get_result(groups):
         program_rezult.append(result_dictionary)
         time.sleep(0.34)
 
+
 user = 'eshmargunov'
 TOKEN = input('Введите токен пользователя eshmargunov: ')
 params = {
@@ -60,16 +63,16 @@ friends_list = responce.json()['response']['items']
 responce = requests.get(geturl('groups.get'), params)
 group_list = responce.json()['response']['items']
 group_dict = dict.fromkeys(group_list, 0)
-groups_scearch(friends_list)
+groups_search(friends_list)
 
 rez_groups = []
 for key in group_dict.keys():
     if group_dict[key] == 0:
         rez_groups.append(key)
         
-program_rezult = []
+program_result = []
 get_result(rez_groups)
 
 with open('groups.json', 'w') as outfile:
-    json.dump(program_rezult, outfile)
+    json.dump(program_result, outfile)
 
